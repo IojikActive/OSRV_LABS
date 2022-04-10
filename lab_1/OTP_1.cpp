@@ -93,24 +93,23 @@ void* crypt(void * cryptParametrs)
 	size_t topIndex = param->topIndex;
 	size_t downIndex = param->downIndex;
 
-	while(downIndex < topIndex)
-		{
-			param->outputText[downIndex] = param->key[downIndex] ^ param->msg[downIndex];
-			// cout <<"#Thread: "<< _test_count_Thread <<"\n";
-			// cout << "DownIndex" << downIndex<<":"<<param->msg[downIndex];
-			cout << param->msg[downIndex];
+	while(downIndex < topIndex){
+		param->outputText[downIndex] = param->key[downIndex] ^ param->msg[downIndex];
+		// cout <<"#Thread: "<< _test_count_Thread <<"\n";
+		// cout << "DownIndex" << downIndex<<":"<<param->msg[downIndex];
+		cout << param->msg[downIndex];
 
-			downIndex++;
-		}
+		downIndex++;
+	}
 		// cout << "\n\n\n";
 
 	status = pthread_barrier_wait(param->barrier); 
-		if(status != PTHREAD_BARRIER_SERIAL_THREAD && status != 0)
-			{
-			std::cout << "problem with pthread_barrier_wait";
-			exit(ERROR_WAIT_BARRIER);
-			}
-			return 0;
+	if(status != PTHREAD_BARRIER_SERIAL_THREAD && status != 0)
+		{
+		std::cout << "problem with pthread_barrier_wait";
+		exit(ERROR_WAIT_BARRIER);
+		}
+		return 0;
 }
 
 void freeSpace(char* outputText,char* msg,char* key){
