@@ -113,6 +113,21 @@ void* crypt(void * cryptParametrs)
 			return 0;
 }
 
+void freeSpace(char* outputText,char* msg,char* key){
+	
+	if(outputText != nullptr){
+		delete[] outputText;
+	}
+	if(msg != nullptr){
+		delete[] msg;
+	}
+	if (key != nullptr){
+		delete[] key;
+	}
+
+
+}
+
 int main (int argc, char **argv) {
 	//#1
 	int c;
@@ -176,13 +191,15 @@ int main (int argc, char **argv) {
 		exit(ERROR_FILE);
 	}
 
-	char* key = new char[inputSize]; // Место для ПСП 
+	// char* key = new char[inputSize]; // Место для ПСП 
+	char* key = nullptr;
 	char* outputText = new char[inputSize]; //Зашифрованный текст
 	char* msg = new char[inputSize]; // Текст из inputFile
 
 	if(lseek(inputFile, 0, SEEK_SET) == -1) // Возвращаемся в начало файла, чтобы прочитать его с начала
 	{
 		std::cout << "error with file ";
+		freeSpace(outputText,msg,key);
 		exit(ERROR_FILE);
 	}
 
@@ -191,6 +208,7 @@ int main (int argc, char **argv) {
 	if(inputSize == -1) // Проверка успешности перемещения  в буффер
 	{
 		std::cout << "error with moving text into buffer msg ";
+		freeSpace(outputText,msg,key);
 		exit(ERROR_FILE);
 	}
 
@@ -208,11 +226,13 @@ int main (int argc, char **argv) {
 	if(pthread_create(&keyGenThread, NULL, keyGenerate, &keyParam) != 0) //Создаем и проверяем успешность потока
 	{
 		std::cout << "error with pthread_create()";
+		freeSpace(outputText,msg,key);
 		exit(ERROR_CREATE_THREAD);
 	}
 	if(pthread_join(keyGenThread, (void**)&key) != 0)// Запускаем поток и отлавливаем результат работы потока keyGenThread
 	{
 		std::cout << "error with pthread_join()";
+		freeSpace(outputText,msg,key);
 		exit(ERROR_JOIN_THREAD);
 	}
 

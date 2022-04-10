@@ -12,7 +12,7 @@ base64 /dev/urandom | head -c 2000 > input.txt # gen random file with base64
 ./otp  -i input.txt -o output.txt -x 4212 -a 84589 -c 45989 -m 217728 && ./otp  -i output.txt -o input2.txt -x 4212 -a 84589 -c 45989 -m 217728
 
 if cmp -s input.txt input2.txt; then
-    printf 'SUCCESS\n'
+    printf '\n\nSUCCESS\n'
 else
-    printf 'FAIL\n'
+    printf '\n\nFAIL\n'
 fi
