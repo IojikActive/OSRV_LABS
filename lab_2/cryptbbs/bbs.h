@@ -18,3 +18,5 @@ namespace bbs {
 
 #define SET_GEN_PARAMS __DIOT(_DCMD_MISC, 1, std::uint32_t) // Pass information to the device
 #define GET_ELEMENT __DIOF(_DCMD_MISC, 2 ,bbs::BBSParams) // Get information from the device
+#define ERROR_COMMAND __DIOT(_DCMD_MISC, 4, int) //error command for server
+

@@ -11,6 +11,7 @@
 //#include <devctl.h>
 #include <string.h>
 #include <sys/neutrino.h>
+#include <unistd.h>
 
 using std::cout;
 
@@ -59,16 +60,15 @@ std::uint32_t getElement() {
 
 int io_devctl(resmgr_context_t *ctp, io_devctl_t *msg, iofunc_ocb_t *ocb) {
 
-    int sts;
+    int sts = -1;
     void *data;
-    int nbytes;
+    int nbytes = 0;
 
     if ((sts = iofunc_devctl_default(ctp, msg, ocb)) != _RESMGR_DEFAULT)
         return (sts);
 
 
     data = _DEVCTL_DATA(msg->i);
-    nbytes = 0;
 
     switch (msg->i.dcmd) {
 
@@ -85,6 +85,11 @@ int io_devctl(resmgr_context_t *ctp, io_devctl_t *msg, iofunc_ocb_t *ocb) {
 
             nbytes = sizeof(std::uint32_t);
 
+            break;
+
+        default:
+        	fprintf(stderr,"%s: Error command ..\n");
+        	return -1;
             break;
     };
 
