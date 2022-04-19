@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#g++ OTP_1.cpp -lpthread -o otp
+g++ OTP_1.cpp -lpthread -o otp
 
 
 rm -f input.txt input2.txt output.txt
